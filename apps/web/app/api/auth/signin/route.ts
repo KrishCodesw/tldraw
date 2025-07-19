@@ -11,7 +11,7 @@ export async function POST(req:Request){
     if(!email||!password){
         return NextResponse.json({error:"Missing fields"},{status:400})
     }
-    const user=await prisma.user.findUnique({where:email})
+    const user=await prisma.user.findUnique({where:{email}})
     if(!user){
         return NextResponse.json({error:"Invalid Creds"},{status:401})
     }
