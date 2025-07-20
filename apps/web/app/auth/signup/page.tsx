@@ -1,12 +1,17 @@
 "use client";
 import DarkVeil from "../../../components/DarkVeil";
 import { useState } from "react";
+import { useUserStore } from "../../stores/userStore";
+import { useRouter } from "next/navigation";
+import { Toaster, toast } from "react-hot-toast";
+import axios from "axios";
 
 export default function SignupPage() {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -14,10 +19,20 @@ export default function SignupPage() {
 
     try {
       console.log("Signup with:", { email, password });
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+
+      const response = await axios.post("/api/auth/signup", {
+        name,
+        email,
+        password,
+      });
+      toast.success("Signup successful!");
+      setTimeout(() => router.push("/api/auth/signin"), 1000);
       // Handle success
-    } catch (error) {
+    } catch (error: any) {
       console.error("Signup error:", error);
+      const errorMessage =
+        error.response?.data?.error || "Something went wrong";
+      toast.error(errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -25,6 +40,7 @@ export default function SignupPage() {
 
   return (
     <div className="relative w-screen h-screen overflow-hidden">
+      <Toaster position="top-center" reverseOrder={false} />
       {/* Background */}
       <DarkVeil
         hueShift={44}
@@ -52,6 +68,15 @@ export default function SignupPage() {
             onChange={(e) => setEmail(e.target.value)}
             required
           />
+          <input
+            type="text"
+            placeholder="Name"
+            className="w-full px-3 py-2 bg-white/10 text-white placeholder-white/60 
+                       rounded border border-white/20 focus:outline-none focus:border-white/50"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
 
           <input
             type="password"
@@ -74,7 +99,10 @@ export default function SignupPage() {
 
           <p className="text-center text-white/60 text-sm">
             Have an account?{" "}
-            <a href="/login" className="text-white underline">
+            <a
+              href="http://localhost:3000/auth/signin"
+              className="text-white underline"
+            >
               Login
             </a>
           </p>
