@@ -8,6 +8,7 @@ import { SignJWT } from "jose";
 const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || "");
 export async function POST(req:Request){
         const {email,password}= await req.json(); 
+      
 
     if(!email||!password){
         return NextResponse.json({error:"Missing fields"},{status:400})
@@ -32,5 +33,9 @@ export async function POST(req:Request){
     console.log("Secret in middleware:", process.env.JWT_SECRET)
 console.log("Secret in signin:", JWT_SECRET)
 
-    return NextResponse.json({message:"Signin Successfull" ,token})
+    return NextResponse.json({message:"Signin Successfull" ,token,user: {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+    },})
 }
