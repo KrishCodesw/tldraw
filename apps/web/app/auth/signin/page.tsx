@@ -24,8 +24,11 @@ export default function SigninPage() {
         email,
         password,
       });
+      const { token, user } = response.data;
+      useUserStore.getState().setToken(token);
+      useUserStore.getState().setUser(user);
       toast.success("Login successful!");
-      setTimeout(() => router.push("/api/protected/hello"), 1000);
+      setTimeout(() => router.push("/hello"), 1000);
       // Handle success
     } catch (error: any) {
       console.error("Signin error:", error);
