@@ -10,7 +10,9 @@ export default function LogoutButton() {
     useUserStore.getState().clearToken();
     useUserStore.getState().clearUser();
 
-    toast.success("Logged out successfully!");
+    toast.success(
+      "Logged out successfully! Until here we have a full stack project template"
+    );
     router.push("/auth/signin");
   };
 
