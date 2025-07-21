@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useUserStore } from "../../app/stores/userStore";
+import LogoutButton from "../../components/LogOutButton";
 
 const HelloPage = () => {
   const { token } = useUserStore.getState();
@@ -26,7 +27,12 @@ const HelloPage = () => {
     else setData("No token found.");
   }, [token]);
 
-  return <div>{data}</div>;
+  return (
+    <div>
+      {data}
+      <LogoutButton />
+    </div>
+  );
 };
 
 export default HelloPage;

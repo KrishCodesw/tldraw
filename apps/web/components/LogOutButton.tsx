@@ -7,11 +7,11 @@ export default function LogoutButton() {
   const router = useRouter();
 
   const handleLogout = () => {
-    useUserStore.getState().setToken("");
-    useUserStore.getState().setUser(User);
+    useUserStore.getState().clearToken();
+    useUserStore.getState().clearUser();
 
     toast.success("Logged out successfully!");
-    router.push("/signin");
+    router.push("/auth/signin");
   };
 
   return (
