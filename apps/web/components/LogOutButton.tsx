@@ -11,7 +11,7 @@ export default function LogoutButton() {
     useUserStore.getState().clearUser();
 
     toast.success(
-      "Logged out successfully! Until here we have a full stack project template"
+      "Logged out successfully! Until here we have a full stack project template,we can build anything from here but will need the login context too"
     );
     router.push("/auth/signin");
   };
